@@ -11,6 +11,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 author:
+version_added: 1.0.0
   - "Jens Carl (@j-carl), Hothead Games Inc."
   - "Rafael Driutti (@rafaeldriutti)"
 module: redshift
@@ -174,16 +175,16 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
-# Basic cluster provisioning example
-- redshift: >
-    command=create
-    node_type=ds1.xlarge
-    identifier=new_cluster
-    username=cluster_admin
-    password=1nsecure
+- name: Basic cluster provisioning example
+  community.aws.redshift:
+    command: create
+    node_type: ds1.xlarge
+    identifier: new_cluster
+    username: cluster_admin
+    password: 1nsecure
 
-# Cluster delete example
-- redshift:
+- name: Cluster delete example
+  community.aws.redshift:
     command: delete
     identifier: new_cluster
     skip_final_cluster_snapshot: true
@@ -258,7 +259,7 @@ except ImportError:
     pass  # caught by AnsibleAWSModule
 
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import AWSRetry, snake_dict_to_camel_dict
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule, is_boto3_error_code
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule, is_boto3_error_code
 
 
 def _collect_facts(resource):

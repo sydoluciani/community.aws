@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: elb_classic_lb
+version_added: 1.0.0
 description:
   - Returns information about the load balancer.
   - Will be marked changed when called only if state is changed.
@@ -138,7 +139,7 @@ EXAMPLES = """
 
 # Basic provisioning example (non-VPC)
 
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "test-please-delete"
     state: present
     zones:
@@ -159,7 +160,7 @@ EXAMPLES = """
 
 # Internal ELB example
 
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "test-vpc"
     scheme: internal
     state: present
@@ -176,7 +177,7 @@ EXAMPLES = """
   delegate_to: localhost
 
 # Configure a health check and the access logs
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "test-please-delete"
     state: present
     zones:
@@ -200,20 +201,20 @@ EXAMPLES = """
   delegate_to: localhost
 
 # Ensure ELB is gone
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "test-please-delete"
     state: absent
   delegate_to: localhost
 
 # Ensure ELB is gone and wait for check (for default timeout)
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "test-please-delete"
     state: absent
     wait: yes
   delegate_to: localhost
 
 # Ensure ELB is gone and wait for check with timeout value
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "test-please-delete"
     state: absent
     wait: yes
@@ -223,7 +224,7 @@ EXAMPLES = """
 # Normally, this module will purge any listeners that exist on the ELB
 # but aren't specified in the listeners parameter. If purge_listeners is
 # false it leaves them alone
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "test-please-delete"
     state: present
     zones:
@@ -239,7 +240,7 @@ EXAMPLES = """
 # Normally, this module will leave availability zones that are enabled
 # on the ELB alone. If purge_zones is true, then any extraneous zones
 # will be removed
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "test-please-delete"
     state: present
     zones:
@@ -253,7 +254,7 @@ EXAMPLES = """
   delegate_to: localhost
 
 # Creates a ELB and assigns a list of subnets to it.
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     state: present
     name: 'New ELB'
     security_group_ids: 'sg-123456, sg-67890'
@@ -268,7 +269,7 @@ EXAMPLES = """
 
 # Create an ELB with connection draining, increased idle timeout and cross availability
 # zone load balancing
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "New ELB"
     state: present
     connection_draining_timeout: 60
@@ -285,7 +286,7 @@ EXAMPLES = """
   delegate_to: localhost
 
 # Create an ELB with load balancer stickiness enabled
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "New ELB"
     state: present
     region: us-east-1
@@ -303,7 +304,7 @@ EXAMPLES = """
   delegate_to: localhost
 
 # Create an ELB with application stickiness enabled
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "New ELB"
     state: present
     region: us-east-1
@@ -321,7 +322,7 @@ EXAMPLES = """
   delegate_to: localhost
 
 # Create an ELB and add tags
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "New ELB"
     state: present
     region: us-east-1
@@ -339,7 +340,7 @@ EXAMPLES = """
   delegate_to: localhost
 
 # Delete all tags from an ELB
-- elb_classic_lb:
+- community.aws.elb_classic_lb:
     name: "New ELB"
     state: present
     region: us-east-1

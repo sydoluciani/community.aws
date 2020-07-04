@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: cloudformation_exports_info
 short_description: Read a value from CloudFormation Exports
+version_added: 1.0.0
 description:
   - Module retrieves a value from CloudFormation Exports
 requirements: ['boto3 >= 1.11.15']
@@ -22,7 +23,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Get Exports
-  cloudformation_exports_info:
+  community.aws.cloudformation_exports_info:
     profile: 'my_aws_profile'
     region: 'my_region'
   register: cf_exports
@@ -37,7 +38,7 @@ export_items:
     type: dict
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import AWSRetry
 
 try:

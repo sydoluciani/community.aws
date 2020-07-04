@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_direct_connect_virtual_interface
+version_added: 1.0.0
 short_description: Manage Direct Connect virtual interfaces
 description:
   - Create, delete, or modify a Direct Connect public or private virtual interface.
@@ -219,14 +220,14 @@ vlan:
 EXAMPLES = '''
 ---
 - name: create an association between a LAG and connection
-  aws_direct_connect_virtual_interface:
+  community.aws.aws_direct_connect_virtual_interface:
     state: present
     name: "{{ name }}"
     link_aggregation_group_id: LAG-XXXXXXXX
     connection_id: dxcon-XXXXXXXX
 
 - name: remove an association between a connection and virtual interface
-  aws_direct_connect_virtual_interface:
+  community.aws.aws_direct_connect_virtual_interface:
     state: absent
     connection_id: dxcon-XXXXXXXX
     virtual_interface_id: dxv-XXXXXXXX
@@ -234,8 +235,8 @@ EXAMPLES = '''
 '''
 
 import traceback
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
-from ansible_collections.amazon.aws.plugins.module_utils.aws.direct_connect import DirectConnectError, delete_virtual_interface
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.direct_connect import DirectConnectError, delete_virtual_interface
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import AWSRetry, camel_dict_to_snake_dict
 
 try:

@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_config_aggregator
+version_added: 1.0.0
 short_description: Manage AWS Config aggregations across multiple accounts
 description:
     - Module manages AWS Config resources
@@ -76,7 +77,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create cross-account aggregator
-  aws_config_aggregator:
+  community.aws.aws_config_aggregator:
     name: test_config_rule
     state: present
     account_sources:
@@ -95,7 +96,7 @@ try:
 except ImportError:
     pass  # handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule, is_boto3_error_code
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule, is_boto3_error_code
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import AWSRetry, camel_dict_to_snake_dict
 
 

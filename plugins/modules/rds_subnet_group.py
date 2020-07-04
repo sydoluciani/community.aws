@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: rds_subnet_group
+version_added: 1.0.0
 short_description: manage RDS database subnet groups
 description:
      - Creates, modifies, and deletes RDS database subnet groups. This module has a dependency on python-boto >= 2.5.
@@ -42,8 +43,8 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
-# Add or change a subnet group
-- rds_subnet_group:
+- name: Add or change a subnet group
+  community.aws.rds_subnet_group:
     state: present
     name: norwegian-blue
     description: My Fancy Ex Parrot Subnet Group
@@ -51,8 +52,8 @@ EXAMPLES = '''
       - subnet-aaaaaaaa
       - subnet-bbbbbbbb
 
-# Remove a subnet group
-- rds_subnet_group:
+- name: Remove a subnet group
+  community.aws.rds_subnet_group:
     state: absent
     name: norwegian-blue
 '''

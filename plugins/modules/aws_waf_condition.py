@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: aws_waf_condition
 short_description: Create and delete WAF Conditions
+version_added: 1.0.0
 description:
   - Read the AWS documentation for WAF
     U(https://aws.amazon.com/documentation/waf/)
@@ -138,7 +139,7 @@ options:
 
 EXAMPLES = '''
   - name: create WAF byte condition
-    aws_waf_condition:
+    community.aws.aws_waf_condition:
       name: my_byte_condition
       filters:
       - field_to_match: header
@@ -148,7 +149,7 @@ EXAMPLES = '''
       type: byte
 
   - name: create WAF geo condition
-    aws_waf_condition:
+    community.aws.aws_waf_condition:
       name: my_geo_condition
       filters:
         - country: US
@@ -157,7 +158,7 @@ EXAMPLES = '''
       type: geo
 
   - name: create IP address condition
-    aws_waf_condition:
+    community.aws.aws_waf_condition:
       name: "{{ resource_prefix }}_ip_condition"
       filters:
         - ip_address: "10.0.0.0/8"
@@ -165,7 +166,7 @@ EXAMPLES = '''
       type: ip
 
   - name: create WAF regex condition
-    aws_waf_condition:
+    community.aws.aws_waf_condition:
       name: my_regex_condition
       filters:
         - field_to_match: query_string
@@ -178,7 +179,7 @@ EXAMPLES = '''
       type: regex
 
   - name: create WAF size condition
-    aws_waf_condition:
+    community.aws.aws_waf_condition:
       name: my_size_condition
       filters:
         - field_to_match: query_string
@@ -187,7 +188,7 @@ EXAMPLES = '''
       type: size
 
   - name: create WAF sql injection condition
-    aws_waf_condition:
+    community.aws.aws_waf_condition:
       name: my_sql_condition
       filters:
         - field_to_match: query_string
@@ -195,7 +196,7 @@ EXAMPLES = '''
       type: sql
 
   - name: create WAF xss condition
-    aws_waf_condition:
+    community.aws.aws_waf_condition:
       name: my_xss_condition
       filters:
         - field_to_match: query_string
@@ -401,10 +402,10 @@ try:
 except ImportError:
     pass  # handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict, AWSRetry, compare_policies
-from ansible_collections.amazon.aws.plugins.module_utils.aws.waf import run_func_with_change_token_backoff, MATCH_LOOKUP
-from ansible_collections.amazon.aws.plugins.module_utils.aws.waf import get_rule_with_backoff, list_rules_with_backoff, list_regional_rules_with_backoff
+from ansible_collections.amazon.aws.plugins.module_utils.waf import run_func_with_change_token_backoff, MATCH_LOOKUP
+from ansible_collections.amazon.aws.plugins.module_utils.waf import get_rule_with_backoff, list_rules_with_backoff, list_regional_rules_with_backoff
 
 
 class Condition(object):

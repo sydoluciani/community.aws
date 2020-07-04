@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_win_password
+version_added: 1.0.0
 short_description: Gets the default administrator password for ec2 windows instances
 description:
     - Gets the default administrator password from any EC2 Windows instance. The instance is referenced by its id (e.g. C(i-XXXXXXX)).
@@ -64,7 +65,7 @@ notes:
 EXAMPLES = '''
 # Example of getting a password
 - name: get the Administrator password
-  ec2_win_password:
+  community.aws.ec2_win_password:
     profile: my-boto-profile
     instance_id: i-XXXXXX
     region: us-east-1
@@ -72,7 +73,7 @@ EXAMPLES = '''
 
 # Example of getting a password using a variable
 - name: get the Administrator password
-  ec2_win_password:
+  community.aws.ec2_win_password:
     profile: my-boto-profile
     instance_id: i-XXXXXX
     region: us-east-1
@@ -80,7 +81,7 @@ EXAMPLES = '''
 
 # Example of getting a password with a password protected key
 - name: get the Administrator password
-  ec2_win_password:
+  community.aws.ec2_win_password:
     profile: my-boto-profile
     instance_id: i-XXXXXX
     region: us-east-1
@@ -89,7 +90,7 @@ EXAMPLES = '''
 
 # Example of waiting for a password
 - name: get the Administrator password
-  ec2_win_password:
+  community.aws.ec2_win_password:
     profile: my-boto-profile
     instance_id: i-XXXXXX
     region: us-east-1

@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: elb_application_lb_info
+version_added: 1.0.0
 short_description: Gather information about application ELBs in AWS
 description:
     - Gather information about application ELBs in AWS
@@ -36,22 +37,22 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
-# Gather information about all target groups
-- elb_application_lb_info:
+- name: Gather information about all target groups
+  community.aws.elb_application_lb_info:
 
-# Gather information about the target group attached to a particular ELB
-- elb_application_lb_info:
+- name: Gather information about the target group attached to a particular ELB
+  community.aws.elb_application_lb_info:
     load_balancer_arns:
       - "arn:aws:elasticloadbalancing:ap-southeast-2:001122334455:loadbalancer/app/my-elb/aabbccddeeff"
 
-# Gather information about a target groups named 'tg1' and 'tg2'
-- elb_application_lb_info:
+- name: Gather information about a target groups named 'tg1' and 'tg2'
+  community.aws.elb_application_lb_info:
     names:
       - elb1
       - elb2
 
-# Gather information about specific ALB
-- elb_application_lb_info:
+- name: Gather information about specific ALB
+  community.aws.elb_application_lb_info:
     names: "alb-name"
     region: "aws-region"
   register: alb_info
@@ -273,7 +274,8 @@ def main():
                            supports_check_mode=True
                            )
     if module._name == 'elb_application_lb_facts':
-        module.deprecate("The 'elb_application_lb_facts' module has been renamed to 'elb_application_lb_info'", version='2.13')
+        module.deprecate("The 'elb_application_lb_facts' module has been renamed to 'elb_application_lb_info'",
+                         date='2021-12-01', collection_name='community.aws')
 
     if not HAS_BOTO3:
         module.fail_json(msg='boto3 required for this module')

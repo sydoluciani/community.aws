@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: data_pipeline
+version_added: 1.0.0
 author:
   - Raghu Udiyar (@raags) <raghusiddarth@gmail.com>
   - Sloane Hertel (@s-hertel) <shertel@redhat.com>
@@ -123,8 +124,7 @@ options:
     type: dict
   version:
     description:
-      - The version option has never had any effect and will be removed in
-        Ansible 2.14
+      - The version option has never had any effect and will be removed after 2022-06-01.
     type: str
 '''
 
@@ -132,7 +132,7 @@ EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
 # Create pipeline
-- data_pipeline:
+- community.aws.data_pipeline:
     name: test-dp
     region: us-west-2
     objects: "{{pipelineObjects}}"
@@ -144,7 +144,7 @@ EXAMPLES = '''
     state: present
 
 # Example populating and activating a pipeline that demonstrates two ways of providing pipeline objects
-- data_pipeline:
+- community.aws.data_pipeline:
   name: test-dp
   objects:
     - "id": "DefaultSchedule"
@@ -167,13 +167,13 @@ EXAMPLES = '''
   state: active
 
 # Activate pipeline
-- data_pipeline:
+- community.aws.data_pipeline:
     name: test-dp
     region: us-west-2
     state: active
 
 # Delete pipeline
-- data_pipeline:
+- community.aws.data_pipeline:
     name: test-dp
     region: us-west-2
     state: absent
@@ -605,7 +605,7 @@ def main():
     argument_spec.update(
         dict(
             name=dict(required=True),
-            version=dict(removed_in_version='2.14'),
+            version=dict(removed_at_date='2022-06-01', removed_from_collection='community.aws'),
             description=dict(required=False, default=''),
             objects=dict(required=False, type='list', default=[]),
             parameters=dict(required=False, type='list', default=[]),

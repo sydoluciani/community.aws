@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: efs
+version_added: 1.0.0
 short_description: create and maintain EFS file systems
 description:
     - Module allows create, search and destroy Amazon EFS file systems.
@@ -106,8 +107,8 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
-# EFS provisioning
-- efs:
+- name: EFS provisioning
+  community.aws.efs:
     state: present
     name: myTestEFS
     tags:
@@ -117,8 +118,8 @@ EXAMPLES = '''
         - subnet_id: subnet-748c5d03
           security_groups: [ "sg-1a2b3c4d" ]
 
-# Modifying EFS data
-- efs:
+- name: Modifying EFS data
+  community.aws.efs:
     state: present
     name: myTestEFS
     tags:
@@ -127,8 +128,8 @@ EXAMPLES = '''
         - subnet_id: subnet-7654fdca
           security_groups: [ "sg-4c5d6f7a" ]
 
-# Deleting EFS
-- efs:
+- name: Deleting EFS
+  community.aws.efs:
     state: absent
     name: myTestEFS
 '''
@@ -233,7 +234,7 @@ try:
 except ImportError as e:
     pass  # Handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import (compare_aws_tags,
                                                                      camel_dict_to_snake_dict,
                                                                      ansible_dict_to_boto3_tag_list,

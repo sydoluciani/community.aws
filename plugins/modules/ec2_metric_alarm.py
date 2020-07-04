@@ -21,6 +21,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: ec2_metric_alarm
 short_description: "Create/update or delete AWS Cloudwatch 'metric alarms'"
+version_added: 1.0.0
 description:
  - Can create or delete AWS metric alarms.
  - Metrics you wish to alarm on must already exist.
@@ -58,7 +59,7 @@ options:
     comparison:
         description:
           - Determines how the threshold value is compared
-          - Symbolic comparison operators have been deprecated, and will be removed in 2.14
+          - Symbolic comparison operators have been deprecated, and will be removed after 2022-06-22.
         required: false
         type: str
         choices:
@@ -167,7 +168,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
   - name: create alarm
-    ec2_metric_alarm:
+    community.aws.ec2_metric_alarm:
       state: present
       region: ap-southeast-2
       name: "cpu-low"
@@ -184,7 +185,7 @@ EXAMPLES = '''
       alarm_actions: ["action1","action2"]
 
   - name: Create an alarm to recover a failed instance
-    ec2_metric_alarm:
+    community.aws.ec2_metric_alarm:
       state: present
       region: us-west-1
       name: "recover-instance"
@@ -202,7 +203,7 @@ EXAMPLES = '''
 
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 
 try:
     from botocore.exceptions import ClientError
@@ -238,7 +239,8 @@ def create_metric_alarm(connection, module):
                    '>': 'GreaterThanThreshold'}
     if comparison in ('<=', '<', '>', '>='):
         module.deprecate('Using the <=, <, > and >= operators for comparison has been deprecated. Please use LessThanOrEqualToThreshold, '
-                         'LessThanThreshold, GreaterThanThreshold or GreaterThanOrEqualToThreshold instead.', version="2.14")
+                         'LessThanThreshold, GreaterThanThreshold or GreaterThanOrEqualToThreshold instead.',
+                         date='2022-06-01', collection_name='community.aws')
         comparison = comparisons[comparison]
 
     if not isinstance(dimensions, list):

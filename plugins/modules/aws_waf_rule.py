@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: aws_waf_rule
 short_description: Create and delete WAF Rules
+version_added: 1.0.0
 description:
   - Read the AWS documentation for WAF
     U(https://aws.amazon.com/documentation/waf/).
@@ -42,7 +43,7 @@ options:
         type: str
     conditions:
         description: >
-          List of conditions used in the rule.  M(aws_waf_condition) can be used to
+          List of conditions used in the rule. M(community.aws.aws_waf_condition) can be used to
           create new conditions.
         type: list
         elements: dict
@@ -75,7 +76,7 @@ options:
 EXAMPLES = '''
 
   - name: create WAF rule
-    aws_waf_rule:
+    community.aws.aws_waf_rule:
       name: my_waf_rule
       conditions:
         - name: my_regex_condition
@@ -89,7 +90,7 @@ EXAMPLES = '''
           negated: yes
 
   - name: remove WAF rule
-    aws_waf_rule:
+    community.aws.aws_waf_rule:
       name: "my_waf_rule"
       state: absent
 
@@ -145,17 +146,19 @@ try:
 except ImportError:
     pass  # handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
-from ansible_collections.amazon.aws.plugins.module_utils.aws.waf import (run_func_with_change_token_backoff,
-                                                                         list_rules_with_backoff,
-                                                                         list_regional_rules_with_backoff,
-                                                                         MATCH_LOOKUP,
-                                                                         )
-from ansible_collections.amazon.aws.plugins.module_utils.aws.waf import (get_web_acl_with_backoff,
-                                                                         list_web_acls_with_backoff,
-                                                                         list_regional_web_acls_with_backoff,
-                                                                         )
+from ansible_collections.amazon.aws.plugins.module_utils.waf import (
+    MATCH_LOOKUP,
+    list_regional_rules_with_backoff,
+    list_rules_with_backoff,
+    run_func_with_change_token_backoff,
+)
+from ansible_collections.amazon.aws.plugins.module_utils.waf import (
+    get_web_acl_with_backoff,
+    list_web_acls_with_backoff,
+    list_regional_web_acls_with_backoff,
+)
 
 
 def get_rule_by_name(client, module, name):

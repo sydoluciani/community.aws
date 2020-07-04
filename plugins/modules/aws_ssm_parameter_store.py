@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_ssm_parameter_store
+version_added: 1.0.0
 short_description: Manage key-value pairs in aws parameter store.
 description:
   - Manage key-value pairs in aws parameter store.
@@ -77,25 +78,25 @@ requirements: [ botocore, boto3 ]
 
 EXAMPLES = '''
 - name: Create or update key/value pair in aws parameter store
-  aws_ssm_parameter_store:
+  community.aws.aws_ssm_parameter_store:
     name: "Hello"
     description: "This is your first key"
     value: "World"
 
 - name: Delete the key
-  aws_ssm_parameter_store:
+  community.aws.aws_ssm_parameter_store:
     name: "Hello"
     state: absent
 
 - name: Create or update secure key/value pair with default kms key (aws/ssm)
-  aws_ssm_parameter_store:
+  community.aws.aws_ssm_parameter_store:
     name: "Hello"
     description: "This is your first key"
     string_type: "SecureString"
     value: "World"
 
 - name: Create or update secure key/value pair with nominated kms key
-  aws_ssm_parameter_store:
+  community.aws.aws_ssm_parameter_store:
     name: "Hello"
     description: "This is your first key"
     string_type: "SecureString"
@@ -103,7 +104,7 @@ EXAMPLES = '''
     value: "World"
 
 - name: Always update a parameter store value and create a new version
-  aws_ssm_parameter_store:
+  community.aws.aws_ssm_parameter_store:
     name: "overwrite_example"
     description: "This example will always overwrite the value"
     string_type: "String"
@@ -111,7 +112,8 @@ EXAMPLES = '''
     overwrite_value: "always"
 
 - name: recommend to use with aws_ssm lookup plugin
-  debug: msg="{{ lookup('aws_ssm', 'hello') }}"
+  debug:
+    msg: "{{ lookup('amazon.aws.aws_ssm', 'hello') }}"
 '''
 
 RETURN = '''
@@ -125,7 +127,7 @@ delete_parameter:
     type: dict
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 
 try:
     from botocore.exceptions import ClientError

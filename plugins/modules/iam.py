@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: iam
+version_added: 1.0.0
 short_description: Manage IAM users, groups, roles and keys
 description:
      - Allows for the management of IAM users, user API keys, groups, roles.
@@ -99,9 +100,8 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 # Basic user creation example
-tasks:
 - name: Create two new IAM users with API keys
-  iam:
+  community.aws.iam:
     iam_type: user
     name: "{{ item }}"
     state: present
@@ -113,9 +113,8 @@ tasks:
 
 # Advanced example, create two new groups and add the pre-existing user
 # jdavila to both groups.
-task:
 - name: Create Two Groups, Mario and Luigi
-  iam:
+  community.aws.iam:
     iam_type: group
     name: "{{ item }}"
     state: present
@@ -124,8 +123,8 @@ task:
      - Luigi
   register: new_groups
 
-- name:
-  iam:
+- name: Update user
+  community.aws.iam:
     iam_type: user
     name: jdavila
     state: update
@@ -134,7 +133,7 @@ task:
 
 # Example of role with custom trust policy for Lambda service
 - name: Create IAM role with custom trust relationship
-  iam:
+  community.aws.iam:
     iam_type: role
     name: AAALambdaTestRole
     state: present

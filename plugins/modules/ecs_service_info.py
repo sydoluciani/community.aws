@@ -9,11 +9,12 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ecs_service_info
+version_added: 1.0.0
 short_description: List or describe services in ECS
 description:
     - Lists or describes services in ECS.
     - This module was called C(ecs_service_facts) before Ansible 2.9, returning C(ansible_facts).
-      Note that the M(ecs_service_info) module no longer returns C(ansible_facts)!
+      Note that the M(community.aws.ecs_service_info) module no longer returns C(ansible_facts)!
 author:
     - "Mark Chance (@Java1Guy)"
     - "Darek Kaczynski (@kaczynskid)"
@@ -52,14 +53,14 @@ EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
 # Basic listing example
-- ecs_service_info:
+- community.aws.ecs_service_info:
     cluster: test-cluster
     service: console-test-service
     details: true
   register: output
 
 # Basic listing example
-- ecs_service_info:
+- community.aws.ecs_service_info:
     cluster: test-cluster
   register: output
 '''
@@ -136,7 +137,7 @@ try:
 except ImportError:
     pass  # caught by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import AWSRetry
 
 
@@ -225,7 +226,7 @@ def main():
     is_old_facts = module._name == 'ecs_service_facts'
     if is_old_facts:
         module.deprecate("The 'ecs_service_facts' module has been renamed to 'ecs_service_info', "
-                         "and the renamed one no longer returns ansible_facts", version='2.13')
+                         "and the renamed one no longer returns ansible_facts", date='2021-12-01', collection_name='community.aws')
 
     show_details = module.params.get('details')
 

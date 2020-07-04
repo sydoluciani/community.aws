@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_vpc_egress_igw
+version_added: 1.0.0
 short_description: Manage an AWS VPC Egress Only Internet gateway
 description:
     - Manage an AWS VPC Egress Only Internet gateway
@@ -36,10 +37,10 @@ EXAMPLES = '''
 
 # Ensure that the VPC has an Internet Gateway.
 # The Internet Gateway ID is can be accessed via {{eigw.gateway_id}} for use in setting up NATs etc.
-ec2_vpc_egress_igw:
-  vpc_id: vpc-abcdefgh
-  state: present
-register: eigw
+- community.aws.ec2_vpc_egress_igw:
+    vpc_id: vpc-abcdefgh
+    state: present
+  register: eigw
 
 '''
 
@@ -57,7 +58,7 @@ vpc_id:
 '''
 
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
 
 try:

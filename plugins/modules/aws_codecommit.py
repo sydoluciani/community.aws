@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_codecommit
+version_added: 1.0.0
 short_description: Manage repositories in AWS CodeCommit
 description:
   - Supports creation and deletion of CodeCommit repositories.
@@ -126,12 +127,12 @@ response_metadata:
 
 EXAMPLES = '''
 # Create a new repository
-- aws_codecommit:
+- community.aws.aws_codecommit:
     name: repo
     state: present
 
 # Delete a repository
-- aws_codecommit:
+- community.aws.aws_codecommit:
     name: repo
     state: absent
 '''
@@ -141,7 +142,7 @@ try:
 except ImportError:
     pass  # Handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
 
 

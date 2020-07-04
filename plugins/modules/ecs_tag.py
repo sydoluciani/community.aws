@@ -8,6 +8,7 @@ from __future__ import absolute_import, division, print_function
 DOCUMENTATION = r'''
 ---
 module: ecs_tag
+version_added: 1.0.0
 short_description: create and remove tags on Amazon ECS resources
 notes:
     - none
@@ -59,7 +60,7 @@ extends_documentation_fragment:
 
 EXAMPLES = r'''
 - name: Ensure tags are present on a resource
-  ecs_tag:
+  community.aws.ecs_tag:
     cluster_name: mycluster
     resource_type: cluster
     state: present
@@ -68,7 +69,7 @@ EXAMPLES = r'''
       env: prod
 
 - name: Remove the Env tag
-  ecs_tag:
+  community.aws.ecs_tag:
     cluster_name: mycluster
     resource_type: cluster
     tags:
@@ -76,7 +77,7 @@ EXAMPLES = r'''
     state: absent
 
 - name: Remove the Env tag if it's currently 'development'
-  ecs_tag:
+  community.aws.ecs_tag:
     cluster_name: mycluster
     resource_type: cluster
     tags:
@@ -84,7 +85,7 @@ EXAMPLES = r'''
     state: absent
 
 - name: Remove all tags except for Name from a cluster
-  ecs_tag:
+  community.aws.ecs_tag:
     cluster_name: mycluster
     resource_type: cluster
     tags:
@@ -108,7 +109,7 @@ removed_tags:
   type: dict
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import boto3_tag_list_to_ansible_dict, ansible_dict_to_boto3_tag_list, compare_aws_tags
 
 try:

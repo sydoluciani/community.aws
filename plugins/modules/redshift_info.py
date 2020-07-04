@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: redshift_info
+version_added: 1.0.0
 author: "Jens Carl (@j-carl)"
 short_description: Gather information about Redshift cluster(s)
 description:
@@ -39,27 +40,27 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Note: These examples do net set authentication details, see the AWS guide for details.
 
-# Find all clusters
-- redshift_info:
+- name: Find all clusters
+  community.aws.redshift_info:
   register: redshift
 
-# Find cluster(s) with matching tags
-- redshift_info:
+- name: Find cluster(s) with matching tags
+  community.aws.redshift_info:
     tags:
       env: prd
       stack: monitoring
   register: redshift_tags
 
-# Find cluster(s) with matching name/prefix and tags
-- redshift_info:
+- name: Find cluster(s) with matching name/prefix and tags
+  community.aws.redshift_info:
     tags:
       env: dev
       stack: web
     name: user-
   register: redshift_web
 
-# Fail if no cluster(s) is/are found
-- redshift_info:
+- name: Fail if no cluster(s) is/are found
+  community.aws.redshift_info:
     tags:
       env: stg
       stack: db
@@ -282,7 +283,7 @@ try:
 except ImportError:
     pass  # caught by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
 
 
@@ -335,7 +336,7 @@ def main():
         supports_check_mode=True
     )
     if module._name == 'redshift_facts':
-        module.deprecate("The 'redshift_facts' module has been renamed to 'redshift_info'", version='2.13')
+        module.deprecate("The 'redshift_facts' module has been renamed to 'redshift_info'", date='2021-12-01', collection_name='community.aws')
 
     cluster_identifier = module.params.get('cluster_identifier')
     cluster_tags = module.params.get('tags')

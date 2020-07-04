@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: rds_instance
+version_added: 1.0.0
 short_description: Manage RDS instances
 description:
     - Create, modify, and delete RDS instances.
@@ -416,7 +417,7 @@ options:
 EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 - name: create minimal aurora instance in default VPC and default subnet group
-  rds_instance:
+  community.aws.rds_instance:
     engine: aurora
     db_instance_identifier: ansible-test-aurora-db-instance
     instance_type: db.t2.small
@@ -425,7 +426,7 @@ EXAMPLES = '''
     cluster_id: ansible-test-cluster  # This cluster must exist - see rds_cluster to manage it
 
 - name: Create a DB instance using the default AWS KMS encryption key
-  rds_instance:
+  community.aws.rds_instance:
     id: test-encrypted-db
     state: present
     engine: mariadb
@@ -436,13 +437,13 @@ EXAMPLES = '''
     allocated_storage: "{{ allocated_storage }}"
 
 - name: remove the DB instance without a final snapshot
-  rds_instance:
+  community.aws.rds_instance:
     id: "{{ instance_id }}"
     state: absent
     skip_final_snapshot: True
 
 - name: remove the DB instance with a final snapshot
-  rds_instance:
+  community.aws.rds_instance:
     id: "{{ instance_id }}"
     state: absent
     final_snapshot_identifier: "{{ snapshot_id }}"
@@ -741,15 +742,16 @@ vpc_security_groups:
 '''
 
 from ansible.module_utils._text import to_text
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule, is_boto3_error_code, get_boto3_client_method_parameters
-from ansible_collections.amazon.aws.plugins.module_utils.aws.rds import (ensure_tags,
-                                                                         arg_spec_to_rds_params,
-                                                                         call_method,
-                                                                         get_rds_method_attribute,
-                                                                         get_tags,
-                                                                         get_final_identifier,
-                                                                         )
-from ansible_collections.amazon.aws.plugins.module_utils.aws.waiters import get_waiter
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule, is_boto3_error_code, get_boto3_client_method_parameters
+from ansible_collections.amazon.aws.plugins.module_utils.rds import (
+    arg_spec_to_rds_params,
+    call_method,
+    ensure_tags,
+    get_final_identifier,
+    get_rds_method_attribute,
+    get_tags,
+)
+from ansible_collections.amazon.aws.plugins.module_utils.waiters import get_waiter
 from ansible.module_utils.common.dict_transformations import camel_dict_to_snake_dict
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import ansible_dict_to_boto3_tag_list, AWSRetry
 from ansible.module_utils.six import string_types

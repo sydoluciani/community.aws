@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: dynamodb_ttl
+version_added: 1.0.0
 short_description: Set TTL for a given DynamoDB table
 description:
 - Uses boto3 to set TTL.
@@ -42,13 +43,13 @@ requirements: [ botocore>=1.5.24, boto3 ]
 
 EXAMPLES = '''
 - name: enable TTL on my cowfacts table
-  dynamodb_ttl:
+  community.aws.dynamodb_ttl:
     state: enable
     table_name: cowfacts
     attribute_name: cow_deleted_date
 
 - name: disable TTL on my cowfacts table
-  dynamodb_ttl:
+  community.aws.dynamodb_ttl:
     state: disable
     table_name: cowfacts
     attribute_name: cow_deleted_date

@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: redshift_cross_region_snapshots
+version_added: 1.0.0
 short_description: Manage Redshift Cross Region Snapshots
 description:
   - Manage Redshift Cross Region Snapshots. Supports KMS-Encrypted Snapshots.
@@ -61,7 +62,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: configure cross-region snapshot on cluster `johniscool`
-  redshift_cross_region_snapshots:
+  community.aws.redshift_cross_region_snapshots:
     cluster_name: johniscool
     state: present
     region: us-east-1
@@ -69,7 +70,7 @@ EXAMPLES = '''
     retention_period: 1
 
 - name: configure cross-region snapshot on kms-encrypted cluster
-  redshift_cross_region_snapshots:
+  community.aws.redshift_cross_region_snapshots:
     cluster_name: whatever
     state: present
     region: us-east-1
@@ -78,7 +79,7 @@ EXAMPLES = '''
     retention_period: 10
 
 - name: disable cross-region snapshots, necessary before most cluster modifications (rename, resize)
-  redshift_cross_region_snapshots:
+  community.aws.redshift_cross_region_snapshots:
     cluster_name: whatever
     state: absent
     region: us-east-1
@@ -87,7 +88,7 @@ EXAMPLES = '''
 
 RETURN = ''' # '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 
 
 class SnapshotController(object):

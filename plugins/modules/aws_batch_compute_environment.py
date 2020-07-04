@@ -9,11 +9,12 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_batch_compute_environment
+version_added: 1.0.0
 short_description: Manage AWS Batch Compute Environments
 description:
     - This module allows the management of AWS Batch Compute Environments.
-      It is idempotent and supports "Check" mode.  Use module M(aws_batch_compute_environment) to manage the compute
-      environment, M(aws_batch_job_queue) to manage job queues, M(aws_batch_job_definition) to manage job definitions.
+      It is idempotent and supports "Check" mode.  Use module M(community.aws.aws_batch_compute_environment) to manage the compute
+      environment, M(community.aws.aws_batch_job_queue) to manage job queues, M(community.aws.aws_batch_job_definition) to manage job definitions.
 
 
 author: Jon Meran (@jonmer85)
@@ -131,7 +132,7 @@ EXAMPLES = '''
     state: present
   tasks:
   - name: My Batch Compute Environment
-    aws_batch_compute_environment:
+    community.aws.aws_batch_compute_environment:
       compute_environment_name: computeEnvironmentName
       state: present
       region: us-east-1
@@ -228,7 +229,7 @@ output:
   type: dict
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import snake_dict_to_camel_dict, camel_dict_to_snake_dict
 import re
 

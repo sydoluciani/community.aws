@@ -9,11 +9,12 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_batch_job_queue
+version_added: 1.0.0
 short_description: Manage AWS Batch Job Queues
 description:
     - This module allows the management of AWS Batch Job Queues.
-      It is idempotent and supports "Check" mode.  Use module M(aws_batch_compute_environment) to manage the compute
-      environment, M(aws_batch_job_queue) to manage job queues, M(aws_batch_job_definition) to manage job definitions.
+      It is idempotent and supports "Check" mode.  Use module M(community.aws.aws_batch_compute_environment) to manage the compute
+      environment, M(community.aws.aws_batch_job_queue) to manage job queues, M(community.aws.aws_batch_job_definition) to manage job definitions.
 
 
 author: Jon Meran (@jonmer85)
@@ -75,7 +76,7 @@ EXAMPLES = '''
     state: present
   tasks:
   - name: My Batch Job Queue
-    aws_batch_job_queue:
+    community.aws.aws_batch_job_queue:
       job_queue_name: jobQueueName
       state: present
       region: us-east-1
@@ -111,8 +112,8 @@ output:
   type: dict
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.batch import set_api_params
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.batch import set_api_params
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
 
 try:

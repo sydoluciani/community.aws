@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_glue_connection
+version_added: 1.0.0
 short_description: Manage an AWS Glue connection
 description:
     - Manage an AWS Glue connection. See U(https://aws.amazon.com/glue/) for details.
@@ -70,7 +71,7 @@ EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
 # Create an AWS Glue connection
-- aws_glue_connection:
+- community.aws.aws_glue_connection:
     name: my-glue-connection
     connection_properties:
       JDBC_CONNECTION_URL: jdbc:mysql://mydb:3306/databasename
@@ -79,7 +80,7 @@ EXAMPLES = '''
     state: present
 
 # Delete an AWS Glue connection
-- aws_glue_connection:
+- community.aws.aws_glue_connection:
     name: my-glue-connection
     state: absent
 
@@ -129,7 +130,7 @@ physical_connection_requirements:
     sample: {'subnet-id':'subnet-aabbccddee'}
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict, get_ec2_security_group_ids_from_names
 
 # Non-ansible imports

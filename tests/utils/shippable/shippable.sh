@@ -74,7 +74,8 @@ set +ux
 set -ux
 
 pip install setuptools==44.1.0
-pip install https://github.com/ansible/ansible/archive/devel.tar.gz --disable-pip-version-check
+
+pip install https://github.com/ansible/ansible/archive/"${A_REV:-devel}".tar.gz --disable-pip-version-check
 
 #ansible-galaxy collection install community.general
 mkdir -p "${HOME}/.ansible/collections/ansible_collections/community"
@@ -87,7 +88,7 @@ git clone https://github.com/ansible-collections/community.general community/gen
 # once community.general is published this will be handled by galaxy cli
 git clone https://github.com/ansible-collections/ansible_collections_google google/cloud
 git clone https://opendev.org/openstack/ansible-collections-openstack openstack/cloud
-ansible-galaxy collection install amazon.aws
+git clone https://github.com/ansible-collections/amazon.aws amazon/aws
 ansible-galaxy collection install ansible.netcommon
 ansible-galaxy collection install community.crypto
 cd "${cwd}"
@@ -114,8 +115,11 @@ function cleanup
             ansible-test coverage xml --color --requirements --group-by command --group-by version ${stub:+"$stub"}
             cp -a tests/output/reports/coverage=*.xml "$SHIPPABLE_RESULT_DIR/codecoverage/"
 
-            # analyze and capture code coverage aggregated by integration test target
-            ansible-test coverage analyze targets generate -v "$SHIPPABLE_RESULT_DIR/testresults/coverage-analyze-targets.json"
+            # analyze and capture code coverage aggregated by integration test target if not on 2.9, defaults to devel if unset
+            if [ -z "${A_REV:-}" ] || [ "${A_REV:-}" != "stable-2.9" ]; then
+                ansible-test coverage analyze targets generate -v "$SHIPPABLE_RESULT_DIR/testresults/coverage-analyze-targets.json"
+            fi
+
 
             # upload coverage report to codecov.io only when using complete on-demand coverage
             if [ "${COVERAGE}" == "--coverage" ] && [ "${CHANGED}" == "" ]; then

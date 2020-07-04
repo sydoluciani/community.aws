@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: ec2_transit_gateway_info
 short_description: Gather information about ec2 transit gateways in AWS
+version_added: 1.0.0
 description:
     - Gather information about ec2 transit gateways in AWS
 author: "Bob Boldin (@BobBoldin)"
@@ -36,22 +37,22 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
-# Gather info about all transit gateways
-- ec2_transit_gateway_info:
+- name: Gather info about all transit gateways
+  community.aws.ec2_transit_gateway_info:
 
-# Gather info about a particular transit gateway using filter transit gateway ID
-- ec2_transit_gateway_info:
+- name: Gather info about a particular transit gateway using filter transit gateway ID
+  community.aws.ec2_transit_gateway_info:
     filters:
       transit-gateway-id: tgw-02c42332e6b7da829
 
-# Gather info about a particular transit gateway using multiple option filters
-- ec2_transit_gateway_info:
+- name: Gather info about a particular transit gateway using multiple option filters
+  community.aws.ec2_transit_gateway_info:
     filters:
       options.dns-support: enable
       options.vpn-ecmp-support: enable
 
-# Gather info about multiple transit gateways using module param
-- ec2_transit_gateway_info:
+- name: Gather info about multiple transit gateways using module param
+  community.aws.ec2_transit_gateway_info:
     transit_gateway_ids:
       - tgw-02c42332e6b7da829
       - tgw-03c53443d5a8cb716
@@ -168,7 +169,7 @@ except Exception:
     pass
     # handled by imported AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import (
     AWSRetry,
     boto3_tag_list_to_ansible_dict,

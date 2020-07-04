@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_glue_job
+version_added: 1.0.0
 short_description: Manage an AWS Glue job
 description:
     - Manage an AWS Glue job. See U(https://aws.amazon.com/glue/) for details.
@@ -84,14 +85,14 @@ EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
 # Create an AWS Glue job
-- aws_glue_job:
+- community.aws.aws_glue_job:
     command_script_location: s3bucket/script.py
     name: my-glue-job
     role: my-iam-role
     state: present
 
 # Delete an AWS Glue job
-- aws_glue_job:
+- community.aws.aws_glue_job:
     name: my-glue-job
     state: absent
 
@@ -184,7 +185,7 @@ timeout:
     sample: 300
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
 
 # Non-ansible imports

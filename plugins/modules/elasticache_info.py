@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: elasticache_info
 short_description: Retrieve information for AWS ElastiCache clusters
+version_added: 1.0.0
 description:
   - Retrieve information from AWS ElastiCache clusters
   - This module was called C(elasticache_facts) before Ansible 2.9. The usage did not change.
@@ -28,10 +29,10 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: obtain all ElastiCache information
-  elasticache_info:
+  community.aws.elasticache_info:
 
 - name: obtain all information for a single ElastiCache cluster
-  elasticache_info:
+  community.aws.elasticache_info:
     name: test_elasticache
 '''
 
@@ -222,7 +223,7 @@ elasticache_clusters:
         Environment: test
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import (get_aws_connection_info,
                                                                      camel_dict_to_snake_dict,
                                                                      AWSRetry,
@@ -299,7 +300,7 @@ def main():
     )
     module = AnsibleAWSModule(argument_spec=argument_spec, supports_check_mode=True)
     if module._name == 'elasticache_facts':
-        module.deprecate("The 'elasticache_facts' module has been renamed to 'elasticache_info'", version='2.13')
+        module.deprecate("The 'elasticache_facts' module has been renamed to 'elasticache_info'", date='2021-12-01', collection_name='community.aws')
 
     client = module.client('elasticache')
 

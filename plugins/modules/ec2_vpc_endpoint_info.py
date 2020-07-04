@@ -8,6 +8,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: ec2_vpc_endpoint_info
 short_description: Retrieves AWS VPC endpoints details using AWS methods.
+version_added: 1.0.0
 description:
   - Gets various details related to AWS VPC Endpoints.
   - This module was called C(ec2_vpc_endpoint_facts) before Ansible 2.9. The usage did not change.
@@ -43,19 +44,19 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Simple example of listing all support AWS services for VPC endpoints
 - name: List supported AWS endpoint services
-  ec2_vpc_endpoint_info:
+  community.aws.ec2_vpc_endpoint_info:
     query: services
     region: ap-southeast-2
   register: supported_endpoint_services
 
 - name: Get all endpoints in ap-southeast-2 region
-  ec2_vpc_endpoint_info:
+  community.aws.ec2_vpc_endpoint_info:
     query: endpoints
     region: ap-southeast-2
   register: existing_endpoints
 
 - name: Get all endpoints with specific filters
-  ec2_vpc_endpoint_info:
+  community.aws.ec2_vpc_endpoint_info:
     query: endpoints
     region: ap-southeast-2
     filters:
@@ -68,7 +69,7 @@ EXAMPLES = '''
   register: existing_endpoints
 
 - name: Get details on specific endpoint
-  ec2_vpc_endpoint_info:
+  community.aws.ec2_vpc_endpoint_info:
     query: endpoints
     region: ap-southeast-2
     vpc_endpoint_ids:
@@ -174,7 +175,7 @@ def main():
 
     module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=True)
     if module._name == 'ec2_vpc_endpoint_facts':
-        module.deprecate("The 'ec2_vpc_endpoint_facts' module has been renamed to 'ec2_vpc_endpoint_info'", version='2.13')
+        module.deprecate("The 'ec2_vpc_endpoint_facts' module has been renamed to 'ec2_vpc_endpoint_info'", date='2021-12-01', collection_name='community.aws')
 
     # Validate Requirements
     if not HAS_BOTO3:

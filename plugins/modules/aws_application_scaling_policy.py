@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_application_scaling_policy
+version_added: 1.0.0
 short_description: Manage Application Auto Scaling Scaling Policies
 notes:
     - for details of the parameters and returns see
@@ -111,7 +112,7 @@ EXAMPLES = '''
 
 # Create step scaling policy for ECS Service
 - name: scaling_policy
-  aws_application_scaling_policy:
+  community.aws.aws_application_scaling_policy:
     state: present
     policy_name: test_policy
     service_namespace: ecs
@@ -132,7 +133,7 @@ EXAMPLES = '''
 
 # Create target tracking scaling policy for ECS Service
 - name: scaling_policy
-  aws_application_scaling_policy:
+  community.aws.aws_application_scaling_policy:
     state: present
     policy_name: test_policy
     service_namespace: ecs
@@ -150,7 +151,7 @@ EXAMPLES = '''
 
 # Remove scalable target for ECS Service
 - name: scaling_policy
-  aws_application_scaling_policy:
+  community.aws.aws_application_scaling_policy:
     state: absent
     policy_name: test_policy
     policy_type: StepScaling
@@ -282,7 +283,7 @@ creation_time:
     sample: '2017-09-28T08:22:51.881000-03:00'
 '''  # NOQA
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import _camel_to_snake, camel_dict_to_snake_dict
 
 try:

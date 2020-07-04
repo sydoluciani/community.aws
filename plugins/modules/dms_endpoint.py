@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: dms_endpoint
+version_added: 1.0.0
 short_description: Creates or destroys a data migration services endpoint
 description:
     - Creates or destroys a data migration services endpoint,
@@ -149,8 +150,8 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 # Note: These examples do not set authentication details
-# Endpoint Creation
-- dms_endpoint:
+- name: Endpoint Creation
+  community.aws.dms_endpoint:
     state: absent
     endpointidentifier: 'testsource'
     endpointtype: source
@@ -165,9 +166,9 @@ EXAMPLES = '''
 '''
 
 RETURN = ''' # '''
-__metaclass__ = type
+
 import traceback
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict, AWSRetry
 try:
     import botocore

@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: lightsail
+version_added: 1.0.0
 short_description: Manage instances in AWS Lightsail
 description:
      - Manage instances in AWS Lightsail.
@@ -77,8 +78,8 @@ extends_documentation_fragment:
 
 
 EXAMPLES = '''
-# Create a new Lightsail instance
-- lightsail:
+- name: Create a new Lightsail instance
+  community.aws.lightsail:
     state: present
     name: my_instance
     region: us-east-1
@@ -89,8 +90,8 @@ EXAMPLES = '''
     user_data: " echo 'hello world' > /home/ubuntu/test.txt"
   register: my_instance
 
-# Delete an instance
-- lightsail:
+- name: Delete an instance
+  community.aws.lightsail:
     state: absent
     region: us-east-1
     name: my_instance
@@ -159,7 +160,7 @@ except ImportError:
     # will be caught by AnsibleAWSModule
     pass
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
 
 

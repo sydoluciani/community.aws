@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: elasticache_snapshot
+version_added: 1.0.0
 short_description: Manage cache snapshots in Amazon ElastiCache
 description:
   - Manage cache snapshots in Amazon ElastiCache.
@@ -52,16 +53,13 @@ options:
 EXAMPLES = """
 # Note: None of these examples set aws_access_key, aws_secret_key, or region.
 # It is assumed that their matching environment variables are set.
----
-- hosts: localhost
-  connection: local
-  tasks:
-    - name: 'Create a snapshot'
-      elasticache_snapshot:
-        name: 'test-snapshot'
-        state: 'present'
-        cluster_id: '{{ cluster }}'
-        replication_id: '{{ replication }}'
+
+- name: 'Create a snapshot'
+  community.aws.elasticache_snapshot:
+    name: 'test-snapshot'
+    state: 'present'
+    cluster_id: '{{ cluster }}'
+    replication_id: '{{ replication }}'
 """
 
 RETURN = """

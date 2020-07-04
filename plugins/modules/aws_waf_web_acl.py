@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: aws_waf_web_acl
 short_description: Create and delete WAF Web ACLs.
+version_added: 1.0.0
 description:
   - Read the AWS documentation for WAF
     U(https://aws.amazon.com/documentation/waf/).
@@ -85,7 +86,7 @@ options:
 
 EXAMPLES = '''
   - name: create web ACL
-    aws_waf_web_acl:
+    community.aws.aws_waf_web_acl:
       name: my_web_acl
       rules:
         - name: my_rule
@@ -96,7 +97,7 @@ EXAMPLES = '''
       state: present
 
   - name: delete the web acl
-    aws_waf_web_acl:
+    community.aws.aws_waf_web_acl:
       name: my_web_acl
       state: absent
 '''
@@ -163,15 +164,16 @@ except ImportError:
 
 import re
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
-from ansible_collections.amazon.aws.plugins.module_utils.aws.waiters import get_waiter
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.waiters import get_waiter
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
-from ansible_collections.amazon.aws.plugins.module_utils.aws.waf import (list_rules_with_backoff,
-                                                                         list_web_acls_with_backoff,
-                                                                         list_regional_web_acls_with_backoff,
-                                                                         run_func_with_change_token_backoff,
-                                                                         list_regional_rules_with_backoff,
-                                                                         )
+from ansible_collections.amazon.aws.plugins.module_utils.waf import (
+    list_regional_rules_with_backoff,
+    list_regional_web_acls_with_backoff,
+    list_rules_with_backoff,
+    list_web_acls_with_backoff,
+    run_func_with_change_token_backoff,
+)
 
 
 def get_web_acl_by_name(client, module, name):

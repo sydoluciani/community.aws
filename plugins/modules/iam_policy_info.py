@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: iam_policy_info
+version_added: 1.0.0
 short_description: Retrieve inline IAM policies for users, groups, and roles
 description:
      - Supports fetching of inline IAM policies for IAM users, groups and roles.
@@ -40,13 +41,13 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
-# Describe all inline IAM policies on an IAM User
-- iam_policy_info:
+- name: Describe all inline IAM policies on an IAM User
+  community.aws.iam_policy_info:
     iam_type: user
     iam_name: example_user
 
-# Describe a specific inline policy on an IAM Role
-- iam_policy_info:
+- name: Describe a specific inline policy on an IAM Role
+  community.aws.iam_policy_info:
     iam_type: role
     iam_name: example_role
     policy_name: example_policy
@@ -83,7 +84,7 @@ try:
 except ImportError:
     pass
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible.module_utils.six import string_types
 
 

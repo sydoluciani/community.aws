@@ -8,6 +8,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_vpc_nacl_info
+version_added: 1.0.0
 short_description: Gather information about Network ACLs in an AWS VPC
 description:
     - Gather information about Network ACLs in an AWS VPC
@@ -44,17 +45,17 @@ EXAMPLES = '''
 
 # Gather information about all Network ACLs:
 - name: Get All NACLs
-  register: all_nacls
-  ec2_vpc_nacl_info:
+  community.aws.ec2_vpc_nacl_info:
     region: us-west-2
+  register: all_nacls
 
 # Retrieve default Network ACLs:
 - name: Get Default NACLs
-  register: default_nacls
-  ec2_vpc_nacl_info:
+  community.aws.ec2_vpc_nacl_info:
     region: us-west-2
     filters:
       'default': 'true'
+  register: default_nacls
 '''
 
 RETURN = '''
@@ -107,7 +108,7 @@ try:
 except ImportError:
     pass  # caught by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible.module_utils._text import to_native
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import (AWSRetry,
                                                                      ansible_dict_to_boto3_filter_list,
@@ -209,7 +210,7 @@ def main():
 
     module = AnsibleAWSModule(argument_spec=argument_spec, supports_check_mode=True)
     if module._name == 'ec2_vpc_nacl_facts':
-        module.deprecate("The 'ec2_vpc_nacl_facts' module has been renamed to 'ec2_vpc_nacl_info'", version='2.13')
+        module.deprecate("The 'ec2_vpc_nacl_facts' module has been renamed to 'ec2_vpc_nacl_info'", date='2021-12-01', collection_name='community.aws')
 
     connection = module.client('ec2', retry_decorator=AWSRetry.jittered_backoff())
 

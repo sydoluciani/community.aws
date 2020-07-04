@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_instance_info
+version_added: 1.0.0
 short_description: Gather information about ec2 instances in AWS
 description:
     - Gather information about ec2 instances in AWS
@@ -41,26 +42,26 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
-# Gather information about all instances
-- ec2_instance_info:
+- name: Gather information about all instances
+  community.aws.ec2_instance_info:
 
-# Gather information about all instances in AZ ap-southeast-2a
-- ec2_instance_info:
+- name: Gather information about all instances in AZ ap-southeast-2a
+  community.aws.ec2_instance_info:
     filters:
       availability-zone: ap-southeast-2a
 
-# Gather information about a particular instance using ID
-- ec2_instance_info:
+- name: Gather information about a particular instance using ID
+  community.aws.ec2_instance_info:
     instance_ids:
       - i-12345678
 
-# Gather information about any instance with a tag key Name and value Example
-- ec2_instance_info:
+- name: Gather information about any instance with a tag key Name and value Example
+  community.aws.ec2_instance_info:
     filters:
       "tag:Name": Example
 
-# Gather information about any instance in states "shutting-down", "stopping", "stopped"
-- ec2_instance_info:
+- name: Gather information about any instance in states "shutting-down", "stopping", "stopped"
+  community.aws.ec2_instance_info:
     filters:
       instance-state-name: [ "shutting-down", "stopping", "stopped" ]
 
@@ -551,7 +552,7 @@ def main():
                            supports_check_mode=True
                            )
     if module._name == 'ec2_instance_facts':
-        module.deprecate("The 'ec2_instance_facts' module has been renamed to 'ec2_instance_info'", version='2.13')
+        module.deprecate("The 'ec2_instance_facts' module has been renamed to 'ec2_instance_info'", date='2021-12-01', collection_name='community.aws')
 
     if not HAS_BOTO3:
         module.fail_json(msg='boto3 required for this module')

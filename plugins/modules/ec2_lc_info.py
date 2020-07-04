@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_lc_info
+version_added: 1.0.0
 short_description: Gather information about AWS Autoscaling Launch Configurations.
 description:
     - Gather information about AWS Autoscaling Launch Configurations.
@@ -54,15 +55,15 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
-# Gather information about all launch configurations
-- ec2_lc_info:
+- name: Gather information about all launch configurations
+  community.aws.ec2_lc_info:
 
-# Gather information about launch configuration with name "example"
-- ec2_lc_info:
+- name: Gather information about launch configuration with name "example"
+  community.aws.ec2_lc_info:
     name: example
 
-# Gather information sorted by created_time from most recent to least recent
-- ec2_lc_info:
+- name: Gather information sorted by created_time from most recent to least recent
+  community.aws.ec2_lc_info:
     sort: created_time
     sort_order: descending
 '''
@@ -217,7 +218,7 @@ def main():
 
     module = AnsibleModule(argument_spec=argument_spec)
     if module._name == 'ec2_lc_facts':
-        module.deprecate("The 'ec2_lc_facts' module has been renamed to 'ec2_lc_info'", version='2.13')
+        module.deprecate("The 'ec2_lc_facts' module has been renamed to 'ec2_lc_info'", date='2021-12-01', collection_name='community.aws')
 
     if not HAS_BOTO3:
         module.fail_json(msg='boto3 required for this module')

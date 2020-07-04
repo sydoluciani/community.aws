@@ -11,6 +11,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: sns
 short_description: Send Amazon Simple Notification Service messages
+version_added: 1.0.0
 description:
   - Sends a notification to a topic on your Amazon SNS account.
 author:
@@ -88,14 +89,14 @@ requirements:
 
 EXAMPLES = """
 - name: Send default notification message via SNS
-  sns:
+  community.aws.sns:
     msg: '{{ inventory_hostname }} has completed the play.'
     subject: Deploy complete!
     topic: deploy
   delegate_to: localhost
 
 - name: Send notification messages via SNS with short message for SMS
-  sns:
+  community.aws.sns:
     msg: '{{ inventory_hostname }} has completed the play.'
     sms: deployed!
     subject: Deploy complete!
@@ -103,7 +104,7 @@ EXAMPLES = """
   delegate_to: localhost
 
 - name: Send message with message_attributes
-  sns:
+  community.aws.sns:
     topic: "deploy"
     msg: "message with extra details!"
     message_attributes:
@@ -137,7 +138,7 @@ try:
 except ImportError:
     pass    # Handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 
 
 def arn_topic_lookup(module, client, short_topic):

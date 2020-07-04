@@ -11,6 +11,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: iam_user_info
+version_added: 1.0.0
 short_description: Gather IAM user(s) facts in AWS
 description:
   - This module can be used to gather IAM user(s) facts in AWS.
@@ -48,17 +49,17 @@ EXAMPLES = r'''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 # Gather facts about "test" user.
 - name: Get IAM user facts
-  iam_user_info:
+  community.aws.iam_user_info:
     name: "test"
 
 # Gather facts about all users in the "dev" group.
 - name: Get IAM user facts
-  iam_user_info:
+  community.aws.iam_user_info:
     group: "dev"
 
 # Gather facts about all users with "/division_abc/subdivision_xyz/" path.
 - name: Get IAM user facts
-  iam_user_info:
+  community.aws.iam_user_info:
     path: "/division_abc/subdivision_xyz/"
 '''
 
@@ -100,7 +101,7 @@ iam_users:
             sample: "test_user"
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict, AWSRetry
 
 try:

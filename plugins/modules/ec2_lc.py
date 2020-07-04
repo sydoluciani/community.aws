@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_lc
+version_added: 1.0.0
 
 short_description: Create or delete AWS Autoscaling Launch Configurations
 
@@ -176,7 +177,7 @@ options:
     choices: ['default', 'dedicated']
   associate_public_ip_address:
     description:
-      - The I(associate_public_ip_address) option does nothing and will be removed in Ansible 2.14.
+      - The I(associate_public_ip_address) option does nothing and will be removed after 2022-06-01
     type: bool
 
 extends_documentation_fragment:
@@ -194,7 +195,7 @@ EXAMPLES = '''
 # create a launch configuration using an AMI image and instance type as a basis
 
 - name: note that encrypted volumes are only supported in >= Ansible 2.4
-  ec2_lc:
+  community.aws.ec2_lc:
     name: special
     image_id: ami-XXX
     key_name: default
@@ -210,9 +211,8 @@ EXAMPLES = '''
     - device_name: /dev/sdb
       ephemeral: ephemeral0
 
-# create a launch configuration using a running instance id as a basis
-
-- ec2_lc:
+- name: create a launch configuration using a running instance id as a basis
+  community.aws.ec2_lc:
     name: special
     instance_id: i-00a48b207ec59e948
     key_name: default
@@ -224,9 +224,8 @@ EXAMPLES = '''
       iops: 3000
       delete_on_termination: true
 
-# create a launch configuration to omit the /dev/sdf EBS device that is included in the AMI image
-
-- ec2_lc:
+- name: create a launch configuration to omit the /dev/sdf EBS device that is included in the AMI image
+  community.aws.ec2_lc:
     name: special
     image_id: ami-XXX
     key_name: default
@@ -250,7 +249,7 @@ EXAMPLES = '''
           encrypted: no
 
   - name: Create launch configuration
-    ec2_lc:
+    community.aws.ec2_lc:
       name: lc1
       image_id: ami-xxxx
       assign_public_ip: yes
@@ -669,7 +668,7 @@ def main():
             ramdisk_id=dict(),
             instance_profile_name=dict(),
             ebs_optimized=dict(default=False, type='bool'),
-            associate_public_ip_address=dict(type='bool', removed_in_version='2.14'),
+            associate_public_ip_address=dict(type='bool', removed_at_date='2022-06-01', removed_from_collection='community.aws'),
             instance_monitoring=dict(default=False, type='bool'),
             assign_public_ip=dict(type='bool'),
             classic_link_vpc_security_groups=dict(type='list'),

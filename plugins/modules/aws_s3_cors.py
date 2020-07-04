@@ -10,6 +10,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_s3_cors
+version_added: 1.0.0
 short_description: Manage CORS for S3 buckets in AWS
 description:
     - Manage CORS for S3 buckets in AWS
@@ -40,7 +41,7 @@ EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
 # Create a simple cors for s3 bucket
-- aws_s3_cors:
+- community.aws.aws_s3_cors:
     name: mys3bucket
     state: present
     rules:
@@ -57,7 +58,7 @@ EXAMPLES = '''
         max_age_seconds: 30000
 
 # Remove cors for s3 bucket
-- aws_s3_cors:
+- community.aws.aws_s3_cors:
     name: mys3bucket
     state: absent
 '''
@@ -98,7 +99,7 @@ try:
 except Exception:
     pass  # Handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import snake_dict_to_camel_dict, compare_policies
 
 

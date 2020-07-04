@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: ec2_vpc_peering_info
 short_description: Retrieves AWS VPC Peering details using AWS methods.
+version_added: 1.0.0
 description:
   - Gets various details related to AWS VPC Peers
   - This module was called C(ec2_vpc_peering_facts) before Ansible 2.9. The usage did not change.
@@ -35,7 +36,7 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Simple example of listing all VPC Peers
 - name: List all vpc peers
-  ec2_vpc_peering_info:
+  community.aws.ec2_vpc_peering_info:
     region: ap-southeast-2
   register: all_vpc_peers
 
@@ -44,7 +45,7 @@ EXAMPLES = '''
     msg: "{{ all_vpc_peers.result }}"
 
 - name: Get details on specific VPC peer
-  ec2_vpc_peering_info:
+  community.aws.ec2_vpc_peering_info:
     peer_connection_ids:
       - pcx-12345678
       - pcx-87654321
@@ -52,7 +53,7 @@ EXAMPLES = '''
   register: all_vpc_peers
 
 - name: Get all vpc peers with specific filters
-  ec2_vpc_peering_info:
+  community.aws.ec2_vpc_peering_info:
     region: ap-southeast-2
     filters:
       status-code: ['pending-acceptance']
@@ -113,7 +114,7 @@ def main():
     module = AnsibleModule(argument_spec=argument_spec,
                            supports_check_mode=True)
     if module._name == 'ec2_vpc_peering_facts':
-        module.deprecate("The 'ec2_vpc_peering_facts' module has been renamed to 'ec2_vpc_peering_info'", version='2.13')
+        module.deprecate("The 'ec2_vpc_peering_facts' module has been renamed to 'ec2_vpc_peering_info'", date='2021-12-01', collection_name='community.aws')
 
     # Validate Requirements
     if not HAS_BOTO3:

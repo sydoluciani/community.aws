@@ -7,6 +7,7 @@ from __future__ import absolute_import, division, print_function
 DOCUMENTATION = '''
 ---
 module: elb_target_info
+version_added: 1.0.0
 short_description: Gathers which target groups a target is associated with.
 description:
   - This module will search through every target group in a region to find
@@ -36,14 +37,14 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = """
-# practical use case - dynamically deregistering and reregistering nodes
+# practical use case - dynamically de-registering and re-registering nodes
 
   - name: Get EC2 Metadata
-    action: ec2_metadata_facts
+    amazon.aws.ec2_metadata_facts:
 
   - name: Get initial list of target groups
     delegate_to: localhost
-    elb_target_info:
+    community.aws.elb_target_info:
       instance_id: "{{ ansible_ec2_instance_id }}"
       region: "{{ ansible_ec2_placement_region }}"
     register: target_info
@@ -54,7 +55,7 @@ EXAMPLES = """
 
   - name: Deregister instance from all target groups
     delegate_to: localhost
-    elb_target:
+    community.aws.elb_target:
         target_group_arn: "{{ item.0.target_group_arn }}"
         target_port: "{{ item.1.target_port }}"
         target_az: "{{ item.1.target_az }}"
@@ -72,7 +73,7 @@ EXAMPLES = """
 
   - name: wait for all targets to deregister simultaneously
     delegate_to: localhost
-    elb_target_info:
+    community.aws.elb_target_info:
       get_unused_target_groups: false
       instance_id: "{{ ansible_ec2_instance_id }}"
       region: "{{ ansible_ec2_placement_region }}"
@@ -82,7 +83,7 @@ EXAMPLES = """
     delay: 10
 
   - name: reregister in elbv2s
-    elb_target:
+    community.aws.elb_target:
       region: "{{ ansible_ec2_placement_region }}"
       target_group_arn: "{{ item.0.target_group_arn }}"
       target_port: "{{ item.1.target_port }}"
@@ -97,7 +98,7 @@ EXAMPLES = """
   # wait until all groups associated with this instance are 'healthy' or
   # 'unused'
   - name: wait for registration
-    elb_target_info:
+    community.aws.elb_target_info:
       get_unused_target_groups: false
       instance_id: "{{ ansible_ec2_instance_id }}"
       region: "{{ ansible_ec2_placement_region }}"
@@ -215,7 +216,7 @@ except ImportError:
     # we can handle the lack of boto3 based on the ec2 module
     pass
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict, AWSRetry
 
 
@@ -416,7 +417,7 @@ def main():
         supports_check_mode=True,
     )
     if module._name == 'elb_target_facts':
-        module.deprecate("The 'elb_target_facts' module has been renamed to 'elb_target_info'", version='2.13')
+        module.deprecate("The 'elb_target_facts' module has been renamed to 'elb_target_info'", date='2021-12-01', collection_name='community.aws')
 
     instance_id = module.params["instance_id"]
     get_unused_target_groups = module.params["get_unused_target_groups"]

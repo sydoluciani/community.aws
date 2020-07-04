@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_customer_gateway
+version_added: 1.0.0
 short_description: Manage an AWS customer gateway
 description:
     - Manage an AWS customer gateway.
@@ -54,17 +55,16 @@ extends_documentation_fragment:
 '''
 
 EXAMPLES = '''
-
-# Create Customer Gateway
-- ec2_customer_gateway:
+- name: Create Customer Gateway
+  community.aws.ec2_customer_gateway:
     bgp_asn: 12345
     ip_address: 1.2.3.4
     name: IndianapolisOffice
     region: us-east-1
   register: cgw
 
-# Delete Customer Gateway
-- ec2_customer_gateway:
+- name: Delete Customer Gateway
+  community.aws.ec2_customer_gateway:
     ip_address: 1.2.3.4
     name: IndianapolisOffice
     state: absent

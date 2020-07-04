@@ -21,6 +21,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: elb_application_lb
+version_added: 1.0.0
 short_description: Manage an Application load balancer
 description:
     - Manage an AWS Application Elastic Load Balancer. See U(https://aws.amazon.com/blogs/aws/new-aws-application-load-balancer/) for details.
@@ -185,7 +186,7 @@ EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
 # Create an ELB and attach a listener
-- elb_application_lb:
+- community.aws.elb_application_lb:
     name: myelb
     security_groups:
       - sg-12345678
@@ -206,7 +207,7 @@ EXAMPLES = '''
     state: present
 
 # Create an ELB and attach a listener with logging enabled
-- elb_application_lb:
+- community.aws.elb_application_lb:
     access_logs_enabled: yes
     access_logs_s3_bucket: mybucket
     access_logs_s3_prefix: "logs"
@@ -230,7 +231,7 @@ EXAMPLES = '''
     state: present
 
 # Create an ALB with listeners and rules
-- elb_application_lb:
+- community.aws.elb_application_lb:
     name: test-alb
     subnets:
       - subnet-12345678
@@ -293,7 +294,7 @@ EXAMPLES = '''
     state: present
 
 # Remove an ELB
-- elb_application_lb:
+- community.aws.elb_application_lb:
     name: myelb
     state: absent
 
@@ -454,16 +455,17 @@ vpc_id:
     sample: vpc-0011223344
 '''
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict, boto3_tag_list_to_ansible_dict, compare_aws_tags
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.elbv2 import (ApplicationLoadBalancer,
-                                                                           ELBListeners,
-                                                                           ELBListener,
-                                                                           ELBListenerRules,
-                                                                           ELBListenerRule,
-                                                                           )
-from ansible_collections.amazon.aws.plugins.module_utils.aws.elb_utils import get_elb_listener_rules
+from ansible_collections.amazon.aws.plugins.module_utils.elbv2 import (
+    ApplicationLoadBalancer,
+    ELBListener,
+    ELBListenerRule,
+    ELBListenerRules,
+    ELBListeners,
+)
+from ansible_collections.amazon.aws.plugins.module_utils.elb_utils import get_elb_listener_rules
 
 
 def create_or_update_elb(elb_obj):

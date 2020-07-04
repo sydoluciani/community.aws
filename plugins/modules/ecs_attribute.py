@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ecs_attribute
+version_added: 1.0.0
 short_description: manage ecs attributes
 description:
     - Create, update or delete ECS container instance attributes.
@@ -62,8 +63,8 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
-# Set attributes
-- ecs_attribute:
+- name: Set attributes
+  community.aws.ecs_attribute:
     state: present
     cluster: test-cluster
     ec2_instance_id: "{{ ec2_id }}"
@@ -72,8 +73,8 @@ EXAMPLES = '''
       - migrated
   delegate_to: localhost
 
-# Delete attributes
-- ecs_attribute:
+- name: Delete attributes
+  community.aws.ecs_attribute:
     state: absent
     cluster: test-cluster
     ec2_instance_id: "{{ ec2_id }}"

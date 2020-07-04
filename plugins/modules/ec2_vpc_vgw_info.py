@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_vpc_vgw_info
+version_added: 1.0.0
 short_description: Gather information about virtual gateways in AWS
 description:
     - Gather information about virtual gateways in AWS.
@@ -36,13 +37,13 @@ EXAMPLES = '''
 # # Note: These examples do not set authentication details, see the AWS Guide for details.
 
 - name: Gather information about all virtual gateways for an account or profile
-  ec2_vpc_vgw_info:
+  community.aws.ec2_vpc_vgw_info:
     region: ap-southeast-2
     profile: production
   register: vgw_info
 
 - name: Gather information about a filtered list of Virtual Gateways
-  ec2_vpc_vgw_info:
+  community.aws.ec2_vpc_vgw_info:
     region: ap-southeast-2
     profile: production
     filters:
@@ -50,7 +51,7 @@ EXAMPLES = '''
   register: vgw_info
 
 - name: Gather information about a specific virtual gateway by VpnGatewayIds
-  ec2_vpc_vgw_info:
+  community.aws.ec2_vpc_vgw_info:
     region: ap-southeast-2
     profile: production
     vpn_gateway_ids: vgw-c432f6a7
@@ -143,7 +144,7 @@ def main():
 
     module = AnsibleModule(argument_spec=argument_spec, supports_check_mode=True)
     if module._name == 'ec2_vpc_vgw_facts':
-        module.deprecate("The 'ec2_vpc_vgw_facts' module has been renamed to 'ec2_vpc_vgw_info'", version='2.13')
+        module.deprecate("The 'ec2_vpc_vgw_facts' module has been renamed to 'ec2_vpc_vgw_info'", date='2021-12-01', collection_name='community.aws')
 
     # Validate Requirements
     if not HAS_BOTO3:

@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 module: ec2_vpc_nacl
 short_description: create and delete Network ACLs.
+version_added: 1.0.0
 description:
   - Read the AWS documentation for Network ACLS
     U(https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html)
@@ -86,7 +87,7 @@ EXAMPLES = '''
 # Complete example to create and delete a network ACL
 # that allows SSH, HTTP and ICMP in, and all traffic out.
 - name: "Create and associate production DMZ network ACL with DMZ subnets"
-  ec2_vpc_nacl:
+  community.aws.ec2_vpc_nacl:
     vpc_id: vpc-12345678
     name: prod-dmz-nacl
     region: ap-southeast-2
@@ -106,7 +107,7 @@ EXAMPLES = '''
     state: 'present'
 
 - name: "Remove the ingress and egress rules - defaults to deny all"
-  ec2_vpc_nacl:
+  community.aws.ec2_vpc_nacl:
     vpc_id: vpc-12345678
     name: prod-dmz-nacl
     region: ap-southeast-2
@@ -120,20 +121,20 @@ EXAMPLES = '''
     state: present
 
 - name: "Remove the NACL subnet associations and tags"
-  ec2_vpc_nacl:
+  community.aws.ec2_vpc_nacl:
     vpc_id: 'vpc-12345678'
     name: prod-dmz-nacl
     region: ap-southeast-2
     state: present
 
 - name: "Delete nacl and subnet associations"
-  ec2_vpc_nacl:
+  community.aws.ec2_vpc_nacl:
     vpc_id: vpc-12345678
     name: prod-dmz-nacl
     state: absent
 
 - name: "Delete nacl by its id"
-  ec2_vpc_nacl:
+  community.aws.ec2_vpc_nacl:
     nacl_id: acl-33b4ee5b
     state: absent
 '''
@@ -154,7 +155,7 @@ try:
 except ImportError:
     pass  # Handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import AWSRetry
 
 # VPC-supported IANA protocol numbers

@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: lambda
+version_added: 1.0.0
 short_description: Manage AWS Lambda functions
 description:
      - Allows for the management of Lambda functions.
@@ -118,7 +119,7 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Create Lambda functions
 - name: looped creation
-  lambda:
+  community.aws.lambda:
     name: '{{ item.name }}'
     state: present
     zip_file: '{{ item.zip_file }}'
@@ -148,7 +149,7 @@ EXAMPLES = '''
 
 # To remove previously added tags pass an empty dict
 - name: remove tags
-  lambda:
+  community.aws.lambda:
     name: 'Lambda function'
     state: present
     zip_file: 'code.zip'
@@ -159,7 +160,7 @@ EXAMPLES = '''
 
 # Basic Lambda function deletion
 - name: Delete Lambda functions HelloWorld and ByeBye
-  lambda:
+  community.aws.lambda:
     name: '{{ item }}'
     state: absent
   loop:
@@ -211,7 +212,7 @@ configuration:
 '''
 
 from ansible.module_utils._text import to_native
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import get_aws_connection_info, boto3_conn, camel_dict_to_snake_dict
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import compare_aws_tags
 import base64

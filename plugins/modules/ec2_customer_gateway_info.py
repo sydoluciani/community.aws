@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_customer_gateway_info
+version_added: 1.0.0
 short_description: Gather information about customer gateways in AWS
 description:
     - Gather information about customer gateways in AWS.
@@ -36,10 +37,10 @@ EXAMPLES = '''
 # # Note: These examples do not set authentication details, see the AWS Guide for details.
 
 - name: Gather information about all customer gateways
-  ec2_customer_gateway_info:
+  community.aws.ec2_customer_gateway_info:
 
 - name: Gather information about a filtered list of customer gateways, based on tags
-  ec2_customer_gateway_info:
+  community.aws.ec2_customer_gateway_info:
     region: ap-southeast-2
     filters:
       "tag:Name": test-customer-gateway
@@ -47,7 +48,7 @@ EXAMPLES = '''
   register: cust_gw_info
 
 - name: Gather information about a specific customer gateway by specifying customer gateway ID
-  ec2_customer_gateway_info:
+  community.aws.ec2_customer_gateway_info:
     region: ap-southeast-2
     customer_gateway_ids:
       - 'cgw-48841a09'
@@ -84,7 +85,7 @@ try:
 except ImportError:
     pass  # caught by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import (ansible_dict_to_boto3_filter_list,
                                                                      boto3_tag_list_to_ansible_dict,
                                                                      camel_dict_to_snake_dict,
@@ -126,7 +127,8 @@ def main():
                               mutually_exclusive=[['customer_gateway_ids', 'filters']],
                               supports_check_mode=True)
     if module._module._name == 'ec2_customer_gateway_facts':
-        module._module.deprecate("The 'ec2_customer_gateway_facts' module has been renamed to 'ec2_customer_gateway_info'", version='2.13')
+        module._module.deprecate("The 'ec2_customer_gateway_facts' module has been renamed to 'ec2_customer_gateway_info'",
+                                 date='2021-12-01', collection_name='community.aws')
 
     connection = module.client('ec2')
 

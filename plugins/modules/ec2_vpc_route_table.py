@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ec2_vpc_route_table
+version_added: 1.0.0
 short_description: Manage route tables for AWS virtual private clouds
 description:
     - Manage route tables for AWS virtual private clouds
@@ -85,7 +86,7 @@ EXAMPLES = '''
 
 # Basic creation example:
 - name: Set up public subnet route table
-  ec2_vpc_route_table:
+  community.aws.ec2_vpc_route_table:
     vpc_id: vpc-1245678
     region: us-west-1
     tags:
@@ -100,7 +101,7 @@ EXAMPLES = '''
   register: public_route_table
 
 - name: Set up NAT-protected route table
-  ec2_vpc_route_table:
+  community.aws.ec2_vpc_route_table:
     vpc_id: vpc-1245678
     region: us-west-1
     tags:
@@ -115,7 +116,7 @@ EXAMPLES = '''
   register: nat_route_table
 
 - name: delete route table
-  ec2_vpc_route_table:
+  community.aws.ec2_vpc_route_table:
     vpc_id: vpc-1245678
     region: us-west-1
     route_table_id: "{{ route_table.id }}"
@@ -225,8 +226,8 @@ route_table:
 
 import re
 from time import sleep
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
-from ansible_collections.amazon.aws.plugins.module_utils.aws.waiters import get_waiter
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.waiters import get_waiter
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import ansible_dict_to_boto3_filter_list
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict, snake_dict_to_camel_dict
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import ansible_dict_to_boto3_tag_list, boto3_tag_list_to_ansible_dict

@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: s3_lifecycle
+version_added: 1.0.0
 short_description: Manage s3 bucket lifecycle rules in AWS
 description:
     - Manage s3 bucket lifecycle rules in AWS
@@ -115,7 +116,7 @@ options:
     type: list
   requester_pays:
     description:
-      - The I(requester_pays) option does nothing and will be removed in Ansible 2.14.
+      - The I(requester_pays) option does nothing and will be removed after 2022-06-01
     type: bool
 extends_documentation_fragment:
 - amazon.aws.aws
@@ -126,16 +127,16 @@ extends_documentation_fragment:
 EXAMPLES = '''
 # Note: These examples do not set authentication details, see the AWS Guide for details.
 
-# Configure a lifecycle rule on a bucket to expire (delete) items with a prefix of /logs/ after 30 days
-- s3_lifecycle:
+- name: Configure a lifecycle rule on a bucket to expire (delete) items with a prefix of /logs/ after 30 days
+  community.aws.s3_lifecycle:
     name: mybucket
     expiration_days: 30
     prefix: logs/
     status: enabled
     state: present
 
-# Configure a lifecycle rule to transition all items with a prefix of /logs/ to glacier after 7 days and then delete after 90 days
-- s3_lifecycle:
+- name: Configure a lifecycle rule to transition all items with a prefix of /logs/ to glacier after 7 days and then delete after 90 days
+  community.aws.s3_lifecycle:
     name: mybucket
     transition_days: 7
     expiration_days: 90
@@ -143,10 +144,10 @@ EXAMPLES = '''
     status: enabled
     state: present
 
-# Configure a lifecycle rule to transition all items with a prefix of /logs/ to glacier on 31 Dec 2020 and then delete on 31 Dec 2030.
 # Note that midnight GMT must be specified.
 # Be sure to quote your date strings
-- s3_lifecycle:
+- name: Configure a lifecycle rule to transition all items with a prefix of /logs/ to glacier on 31 Dec 2020 and then delete on 31 Dec 2030.
+  community.aws.s3_lifecycle:
     name: mybucket
     transition_date: "2020-12-30T00:00:00.000Z"
     expiration_date: "2030-12-30T00:00:00.000Z"
@@ -154,21 +155,21 @@ EXAMPLES = '''
     status: enabled
     state: present
 
-# Disable the rule created above
-- s3_lifecycle:
+- name: Disable the rule created above
+  community.aws.s3_lifecycle:
     name: mybucket
     prefix: logs/
     status: disabled
     state: present
 
-# Delete the lifecycle rule created above
-- s3_lifecycle:
+- name: Delete the lifecycle rule created above
+  community.aws.s3_lifecycle:
     name: mybucket
     prefix: logs/
     state: absent
 
-# Configure a lifecycle rule to transition all backup files older than 31 days in /backups/ to standard infrequent access class.
-- s3_lifecycle:
+- name: Configure a lifecycle rule to transition all backup files older than 31 days in /backups/ to standard infrequent access class.
+  community.aws.s3_lifecycle:
     name: mybucket
     prefix: backups/
     storage_class: standard_ia
@@ -176,8 +177,8 @@ EXAMPLES = '''
     state: present
     status: enabled
 
-# Configure a lifecycle rule to transition files to infrequent access after 30 days and glacier after 90
-- s3_lifecycle:
+- name: Configure a lifecycle rule to transition files to infrequent access after 30 days and glacier after 90
+  community.aws.s3_lifecycle:
     name: mybucket
     prefix: logs/
     state: present
@@ -203,7 +204,7 @@ try:
 except ImportError:
     pass  # handled by AnsibleAwsModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 
 
 def create_lifecycle_rule(client, module):
@@ -443,7 +444,7 @@ def main():
         noncurrent_version_transition_days=dict(type='int'),
         noncurrent_version_transitions=dict(type='list'),
         prefix=dict(),
-        requester_pays=dict(type='bool', removed_in_version='2.14'),
+        requester_pays=dict(type='bool', removed_at_date='2022-06-01', removed_from_collection='community.aws'),
         rule_id=dict(),
         state=dict(default='present', choices=['present', 'absent']),
         status=dict(default='enabled', choices=['enabled', 'disabled']),

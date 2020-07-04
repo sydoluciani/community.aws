@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 
+version_added: 1.0.0
 module: cloudfront_invalidation
 
 short_description: create invalidations for AWS CloudFront distributions
@@ -60,7 +61,7 @@ notes:
 EXAMPLES = '''
 
 - name: create a batch of invalidations using a distribution_id for a reference
-  cloudfront_invalidation:
+  community.aws.cloudfront_invalidation:
     distribution_id: E15BU8SDCGSG57
     caller_reference: testing 123
     target_paths:
@@ -69,7 +70,7 @@ EXAMPLES = '''
       - /testpaththree/test3.ss
 
 - name: create a batch of invalidations using an alias as a reference and one path using a wildcard match
-  cloudfront_invalidation:
+  community.aws.cloudfront_invalidation:
     alias: alias.test.com
     caller_reference: testing 123
     target_paths:
@@ -137,8 +138,8 @@ location:
 
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import snake_dict_to_camel_dict
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
-from ansible_collections.amazon.aws.plugins.module_utils.aws.cloudfront_facts import CloudFrontFactsServiceManager
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.cloudfront_facts import CloudFrontFactsServiceManager
 import datetime
 
 try:

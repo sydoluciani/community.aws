@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: ecs_taskdefinition
+version_added: 1.0.0
 short_description: register a task definition in ecs
 description:
     - Registers or deregisters task definitions in the Amazon Web Services (AWS) EC2 Container Service (ECS).
@@ -105,7 +106,7 @@ extends_documentation_fragment:
 
 EXAMPLES = '''
 - name: Create task definition
-  ecs_taskdefinition:
+  community.aws.ecs_taskdefinition:
     containers:
     - name: simple-app
       cpu: 10
@@ -146,7 +147,7 @@ EXAMPLES = '''
   register: task_output
 
 - name: Create task definition
-  ecs_taskdefinition:
+  community.aws.ecs_taskdefinition:
     family: nginx
     containers:
     - name: nginx
@@ -160,7 +161,7 @@ EXAMPLES = '''
     state: present
 
 - name: Create task definition
-  ecs_taskdefinition:
+  community.aws.ecs_taskdefinition:
     family: nginx
     containers:
     - name: nginx
@@ -177,7 +178,7 @@ EXAMPLES = '''
 
 # Create Task Definition with Environment Variables and Secrets
 - name: Create task definition
-  ecs_taskdefinition:
+  community.aws.ecs_taskdefinition:
     family: nginx
     containers:
     - name: nginx
@@ -211,7 +212,7 @@ try:
 except ImportError:
     pass  # caught by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
 from ansible.module_utils._text import to_text
 

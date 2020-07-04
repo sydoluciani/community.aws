@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = r'''
 ---
 module: cloudwatchevent_rule
+version_added: 1.0.0
 short_description: Manage CloudWatch Event rules and targets
 description:
   - This module creates and manages CloudWatch event rules and targets.
@@ -107,7 +108,7 @@ options:
 '''
 
 EXAMPLES = '''
-- cloudwatchevent_rule:
+- community.aws.cloudwatchevent_rule:
     name: MyCronTask
     schedule_expression: "cron(0 20 * * ? *)"
     description: Run my scheduled task
@@ -115,7 +116,7 @@ EXAMPLES = '''
       - id: MyTargetId
         arn: arn:aws:lambda:us-east-1:123456789012:function:MyFunction
 
-- cloudwatchevent_rule:
+- community.aws.cloudwatchevent_rule:
     name: MyDisabledCronTask
     schedule_expression: "rate(5 minutes)"
     description: Run my disabled scheduled task
@@ -125,7 +126,7 @@ EXAMPLES = '''
         arn: arn:aws:lambda:us-east-1:123456789012:function:MyFunction
         input: '{"foo": "bar"}'
 
-- cloudwatchevent_rule:
+- community.aws.cloudwatchevent_rule:
     name: MyCronTask
     state: absent
 '''
@@ -153,7 +154,7 @@ try:
 except ImportError:
     pass  # handled by AnsibleAWSModule
 
-from ansible_collections.amazon.aws.plugins.module_utils.aws.core import AnsibleAWSModule
+from ansible_collections.amazon.aws.plugins.module_utils.core import AnsibleAWSModule
 from ansible_collections.amazon.aws.plugins.module_utils.ec2 import camel_dict_to_snake_dict
 
 

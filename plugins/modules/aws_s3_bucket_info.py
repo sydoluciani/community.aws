@@ -9,6 +9,7 @@ __metaclass__ = type
 DOCUMENTATION = '''
 ---
 module: aws_s3_bucket_info
+version_added: 1.0.0
 short_description: Lists S3 buckets in AWS
 requirements:
   - boto3 >= 1.4.4
@@ -16,7 +17,7 @@ requirements:
 description:
     - Lists S3 buckets in AWS
     - This module was called C(aws_s3_bucket_facts) before Ansible 2.9, returning C(ansible_facts).
-      Note that the M(aws_s3_bucket_info) module no longer returns C(ansible_facts)!
+      Note that the M(community.aws.aws_s3_bucket_info) module no longer returns C(ansible_facts)!
 author: "Gerben Geijteman (@hyperized)"
 extends_documentation_fragment:
 - amazon.aws.aws
@@ -30,7 +31,7 @@ EXAMPLES = '''
 # Note: Only AWS S3 is currently supported
 
 # Lists all s3 buckets
-- aws_s3_bucket_info:
+- community.aws.aws_s3_bucket_info:
   register: result
 
 - name: List buckets
@@ -94,7 +95,7 @@ def main():
     is_old_facts = module._name == 'aws_s3_bucket_facts'
     if is_old_facts:
         module.deprecate("The 'aws_s3_bucket_facts' module has been renamed to 'aws_s3_bucket_info', "
-                         "and the renamed one no longer returns ansible_facts", version='2.13')
+                         "and the renamed one no longer returns ansible_facts", date='2021-12-01', collection_name='community.aws')
 
     # Verify Boto3 is used
     if not HAS_BOTO3:
